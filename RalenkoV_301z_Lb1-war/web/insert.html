@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Вставка нових даних</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Введіть дані для додавання</h1>
+        <form>
+            Прізвище автора <input type="text" name="surname_of_author" id = "surname"><br>
+            Ім'я автора <input type="text" name="name_of_author" id = "nameauthor"><br>
+            Назва книги<input type="text" name="name_of_book" id = "namebook"><br>
+            Рік видавництва книги<input type="text" name="year_of_book" id="check"><br>
+            Місто видавництва <input type="text" name="city_of_print" id = "city"><br>
+            <input type="button" name="insert_btn" id="btn" value="Додати в таблицю"><br>
+        </form>
+        <script> 
+                btn.onclick = function() {
+                var s = document.getElementById("check").value;
+                var sofau = document.getElementById("surname").value;
+                var nameofau = document.getElementById("nameauthor").value;
+                var namebook = document.getElementById("namebook").value;
+                var city = document.getElementById("city").value;
+                if (s.trim() == '') {
+                    alert('Ви нічого не ввели в поле "Рік видавництва книги", повторіть спробу');
+                }
+                else if(/[^[0-9]/.test(s)){
+                    alert('Ви ввели не число в поле "Рік видавництва книги", повторіть спробу');
+                }
+                else if (sofau.trim() == '') {
+                    alert('Ви нічого не ввели в поле "Прізвище автора", повторіть спробу');
+                }
+                else if (nameofau.trim() == '') {
+                    alert('Ви нічого не ввели в поле "Імя автора", повторіть спробу');
+                }
+                else if (namebook.trim() == '') {
+                    alert('Ви нічого не ввели в поле "Назва книги", повторіть спробу');
+                }
+                else if (city.trim() == '') {
+                    alert('Ви нічого не ввели в поле "Місто видавництва книги", повторіть спробу');
+                }
+                else{
+                    location.href = "/RalenkoV_301z_Lb1-war/create_new_servlet?surname_of_author="
+                    + document.getElementById("surname").value+
+                    "&name_of_author=" + document.getElementById("nameauthor").value+
+                    "&name_of_book=" + document.getElementById("namebook").value+
+                    "&year_of_book=" + document.getElementById("check").value+
+                    "&city_of_print=" + document.getElementById("city").value+
+                    "&insert_btn=%D0%9F%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B8";
+                };
+            };
+        </script>
+    </body>
+</html>

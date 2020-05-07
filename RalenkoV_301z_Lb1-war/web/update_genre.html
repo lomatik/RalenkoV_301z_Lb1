@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Оновлення</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Введіть критерії пошуку жанрів</h1>
+        <h2>Для показу всіх жанрів залиште поля пустими</h2>
+        <form>
+            Назва жанру <input type="text" name="surname_of_author" id = "name"><br>
+            Тип жанру <input type="text" name="name_of_author" id = "type"><br>
+            Рік створення<input type="text" name="name_of_book" id = "check"><br>
+            <input type="button" name="show_btn" value="Показати" id="btn"><br>
+        </form>
+        <script> 
+                btn.onclick = function() {
+                var s = document.getElementById("check").value;
+                if(/[^[0-9]/.test(s)){
+                    alert('Ви ввели не число в поле "Рік створення", повторіть спробу');
+                }
+                else{
+                    location.href = "/RalenkoV_301z_Lb1-war/Show_to_Update_genre?name="
+                    + document.getElementById("name").value+
+                    "&type=" + document.getElementById("type").value+
+                    "&year=" + document.getElementById("check").value;
+                };
+            };
+        </script>
+    </body>
+</html>
