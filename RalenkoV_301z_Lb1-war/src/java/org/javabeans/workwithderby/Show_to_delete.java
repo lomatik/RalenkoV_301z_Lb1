@@ -104,8 +104,6 @@ public class Show_to_delete extends HttpServlet {
         System.out.println("Retrieving data from database...");
         System.out.println("\nBooks:");
         
-        int countofArray = 0;
-        
         List<Book> books = new LinkedList<>();
         
         while (resultSet.next()) {
@@ -125,8 +123,6 @@ public class Show_to_delete extends HttpServlet {
             book.setCity_of_print(cityofprint);
             
             books.add(book);
-            
-            countofArray++;
             
             System.out.println("\n================\n");
             System.out.println("id: " + id);

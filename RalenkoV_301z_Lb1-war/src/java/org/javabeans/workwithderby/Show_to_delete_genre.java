@@ -98,8 +98,6 @@ public class Show_to_delete_genre extends HttpServlet {
         System.out.println("Retrieving data from database...");
         System.out.println("\nGenres:");
         
-        int countofArray = 0;
-        
         List<Genre> genres = new LinkedList<>();
         
         while (resultSet.next()) {
@@ -115,8 +113,6 @@ public class Show_to_delete_genre extends HttpServlet {
             genre.setYeargenre(yeargenre);
             
             genres.add(genre);
-            
-            countofArray++;
             
             System.out.println("\n================\n");
             System.out.println("id: " + id);
@@ -147,9 +143,7 @@ public class Show_to_delete_genre extends HttpServlet {
             throws ServletException, IOException {
     try {
         processRequest(request, response);
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(Show_to_delete.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
+    } catch (ClassNotFoundException | SQLException ex) {
         Logger.getLogger(Show_to_delete.class.getName()).log(Level.SEVERE, null, ex);
     }
     }
@@ -167,9 +161,7 @@ public class Show_to_delete_genre extends HttpServlet {
             throws ServletException, IOException {
     try {
         processRequest(request, response);
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(Show_to_delete.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
+    } catch (ClassNotFoundException | SQLException ex) {
         Logger.getLogger(Show_to_delete.class.getName()).log(Level.SEVERE, null, ex);
     }
     }

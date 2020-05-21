@@ -56,11 +56,12 @@ public class create_new_servlet extends HttpServlet {
         String name_of_book = request.getParameter("name_of_book");
         String year_of_book = request.getParameter("year_of_book");
         String city_of_print = request.getParameter("city_of_print");
+        String id_genre = request.getParameter("id_genre");
         
         sql = "INSERT INTO BOOKS (SURNAMEAUTHOR, NAMEAUTHOR, NAMEBOOK, "
-        + "YEARBOOK, CITYOFPRINT) VALUES ('" + surname_of_author + 
+        + "YEARBOOK, CITYOFPRINT, IDGENRE) VALUES ('" + surname_of_author + 
         "','"+ name_of_author +"','"+ name_of_book +"'," 
-        + year_of_book + ",'" + city_of_print + "')";
+        + year_of_book + ",'" + city_of_print + "'," + id_genre + ")";
         
         statement.executeUpdate(sql);
         

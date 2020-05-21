@@ -122,7 +122,17 @@ public class show_all_servlet extends HttpServlet {
                 sql += "CITYOFPRINT = '" + city_of_print + "'";
             }
         }
-
+        
+        String[] namegenreArray = new String[1000];
+        ResultSet resultSetgenre = statement.executeQuery("SELECT * FROM GENRES");
+        
+        while (resultSetgenre.next()) {
+            int id_genre = resultSetgenre.getInt("ID");
+            String name_genre = resultSetgenre.getString("NAMEGENRE");
+            namegenreArray[id_genre] = name_genre;
+        }
+        
+        resultSetgenre.close();
         ResultSet resultSet = statement.executeQuery(sql);
 
         System.out.println("Retrieving data from database...");
@@ -135,19 +145,23 @@ public class show_all_servlet extends HttpServlet {
         String[] cityofprintArray = new String[1000];
         int countofArray = 0;
         
+        int[] idgenreArray = new int[1000];
+
         while (resultSet.next()) {
-            int id = resultSet.getRow();
+            int id = resultSet.getInt("ID");
             String name = resultSet.getString("NAMEAUTHOR");
             String surnameauthor = resultSet.getString("SURNAMEAUTHOR");
             String namebook = resultSet.getString("NAMEBOOK");
             int yearbook = resultSet.getInt("YEARBOOK");
             String cityofprint = resultSet.getString("CITYOFPRINT");
+            int id_genre = resultSet.getInt("IDGENRE");
             
             nameauthorArray[countofArray] = name;
             surnameauthorArray[countofArray] = surnameauthor;
             namebookArray[countofArray] = namebook;
             yearbookArray[countofArray] = yearbook;
             cityofprintArray[countofArray] = cityofprint;
+            idgenreArray[countofArray] = id_genre;
             
             countofArray++;
             
@@ -158,6 +172,7 @@ public class show_all_servlet extends HttpServlet {
             System.out.println("namebook: " + namebook);
             System.out.println("yearbook: " + yearbook);
             System.out.println("cityofprint: " + cityofprint);
+            System.out.println("idgenre: " + id_genre);
         }
 
         System.out.println("Closing connection and releasing resources...");
@@ -177,12 +192,12 @@ public class show_all_servlet extends HttpServlet {
             out.println(HttpSessionManager.getActiveSessionsCount() + " user(s) using this site.");
             out.println("<table>");
             out.println("<tr><th>Ім'я автора</th><th>Прізвище автора</th><th>"
-                    + "Назва книги</th><th>Рік видавництва</th><th>Місто видавництва</th></tr>");
+                    + "Назва книги</th><th>Рік видавництва</th><th>Місто видавництва</th><th>Назва жанру</th></tr>");
             for (int i = 0; i < countofArray; i++) {
                 out.println("<tr><td>"+ nameauthorArray[i] + "</td><td>" 
                 + surnameauthorArray[i] + "</td><td>" + namebookArray[i] 
                 + "</td><td>" + yearbookArray[i] + "</td><td>"
-                + cityofprintArray[i] + "</td></tr>");
+                + cityofprintArray[i] + "</td><td>"+ namegenreArray[idgenreArray[i]] +"</td></tr>");
             }
             out.println("</table>");
             out.println("</body>");

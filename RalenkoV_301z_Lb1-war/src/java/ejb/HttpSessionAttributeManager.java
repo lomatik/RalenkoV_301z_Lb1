@@ -18,17 +18,17 @@ public class HttpSessionAttributeManager implements HttpSessionAttributeListener
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
-        System.out.println("Attribute added");
+        System.out.println("Http attribute added");
     }
 
     @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
-        System.out.println("Attribute Removed");
+        System.out.println("Http attribute Removed");
     }
 
     @Override
     public void attributeReplaced(HttpSessionBindingEvent event) {
-        System.out.println("Attribute replaced");
+        System.out.println("Http attribute replaced");
     }
     
 }

@@ -16,6 +16,7 @@ public class Book {
     String name_of_book;
     int year_of_book;
     String city_of_print;
+    Genre genre;
 
     public Book() {
     }
@@ -66,6 +67,14 @@ public class Book {
 
     public void setCity_of_print(String city_of_print) {
         this.city_of_print = city_of_print;
+    }
+
+    public String getGenre() {
+        return genre.getNamegenre();
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     @Override
