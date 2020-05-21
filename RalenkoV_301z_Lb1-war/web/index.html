@@ -15,14 +15,14 @@ and open the template in the editor.
         <form action="Show_genres_to_insert">
         <input type="submit" name="insert" value="Створити книгу"><br>
         </form>
-        <form action="update.html">
-        <input type="submit" name="update" value="Модифікувати книгу"><br>
+        <form>
+        <input type="button" name="update" id ="up_btn" value="Модифікувати книгу"><br>
         </form>
-        <form action="delete.html">
-        <input type="submit" name="delete" value="Видалити книги"><br>
+        <form>
+        <input type="button" name="delete" id ="del_btn" value="Видалити книги"><br>
         </form>
-        <form action="show_book.html">
-        <input type="submit" name="show_book" value="Показати книги"><br>
+        <form>
+        <input type="button" name="show_book" id ="shw_btn" value="Показати книги"><br>
         </form>
         <form action="insert_genre.html">
         <input type="submit" name="show_book" value="Створити жанр"><br>
@@ -36,5 +36,16 @@ and open the template in the editor.
         <form action="show_genre.html">
         <input type="submit" name="show_book" value="Показати жанри"><br>
         </form>
+        <script>
+            up_btn.onclick = function() {
+                location.href = "/RalenkoV_301z_Lb1-war/Show_genres_to_insert?next_jsp=update";
+            };
+            del_btn.onclick = function() {
+                location.href = "/RalenkoV_301z_Lb1-war/Show_genres_to_insert?next_jsp=delete";
+            };
+            shw_btn.onclick = function() {
+                location.href = "/RalenkoV_301z_Lb1-war/Show_genres_to_insert?next_jsp=show_book";
+            };
+        </script>
     </body>
 </html>

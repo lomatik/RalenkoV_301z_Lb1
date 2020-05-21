@@ -58,6 +58,7 @@ public class show_all_servlet extends HttpServlet {
         String name_of_book;   
         String year_of_book;
         String city_of_print;
+        String id_genre_book;
         
         if (request.getParameter("surname_of_author") == null) {
             surname_of_author= "";
@@ -84,14 +85,18 @@ public class show_all_servlet extends HttpServlet {
         }
         else city_of_print = request.getParameter("city_of_print");
         
+        if (request.getParameter("id_genre") == null) id_genre_book = "";
+        else id_genre_book = request.getParameter("id_genre");
+        
         if (!"".equals(surname_of_author) || !"".equals(name_of_author) 
                 || !"".equals(name_of_book) || !"".equals(year_of_book) 
-                || !"".equals(city_of_print)){
+                || !"".equals(city_of_print) || !"".equals(id_genre_book)){
             sql = "SELECT * FROM BOOKS WHERE ";
             if (!"".equals(surname_of_author)) {
                 sql += "SURNAMEAUTHOR = '" + surname_of_author + "'";
                 if(!"".equals(name_of_author) || !"".equals(name_of_book) 
-                    || !"".equals(year_of_book) || !"".equals(city_of_print)){
+                    || !"".equals(year_of_book) || !"".equals(city_of_print)
+                        || !"".equals(id_genre_book)){
                     sql += And;
                 }
             }
@@ -99,27 +104,35 @@ public class show_all_servlet extends HttpServlet {
             if (!"".equals(name_of_author)) {
                 sql += "NAMEAUTHOR = '" + name_of_author + "'";
                 if(!"".equals(name_of_book) || !"".equals(year_of_book) 
-                        || !"".equals(city_of_print)){
+                        || !"".equals(city_of_print) || !"".equals(id_genre_book)){
                     sql += And;
                 }
             }
         
             if (!"".equals(name_of_book)) {
                 sql += "NAMEBOOK = '" + name_of_book + "'";
-                if(!"".equals(year_of_book) || !"".equals(city_of_print)){
+                if(!"".equals(year_of_book) || !"".equals(city_of_print)
+                        || !"".equals(id_genre_book)){
                     sql += And;
                 }
             }
         
             if (!"".equals(year_of_book)) {
                 sql += "YEARBOOK = " + year_of_book;
-                if(!"".equals(city_of_print)){
+                if(!"".equals(city_of_print) || !"".equals(id_genre_book)){
                     sql += And;
                 }
             }
         
             if (!"".equals(city_of_print)) {
                 sql += "CITYOFPRINT = '" + city_of_print + "'";
+                if(!"".equals(id_genre_book)){
+                    sql += And;
+                }
+            }
+            
+            if(!"".equals(id_genre_book)){
+                sql += "IDGENRE = " + id_genre_book;
             }
         }
         

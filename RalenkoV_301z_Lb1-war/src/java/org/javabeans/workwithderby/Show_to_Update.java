@@ -6,6 +6,7 @@
 package org.javabeans.workwithderby;
 
 import com.library.Book;
+import com.library.Genre;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -57,6 +58,7 @@ public class Show_to_Update extends HttpServlet {
         String name_of_book;   
         String year_of_book;
         String city_of_print;
+        String id_genre_book;
         
         if (request.getParameter("surname_of_author") == null) {
             surname_of_author= "";
@@ -83,14 +85,18 @@ public class Show_to_Update extends HttpServlet {
         }
         else city_of_print = request.getParameter("city_of_print");
         
+        if (request.getParameter("id_genre") == null) id_genre_book = "";
+        else id_genre_book = request.getParameter("id_genre");
+        
         if (!"".equals(surname_of_author) || !"".equals(name_of_author) 
                 || !"".equals(name_of_book) || !"".equals(year_of_book) 
-                || !"".equals(city_of_print)){
+                || !"".equals(city_of_print) || !"".equals(id_genre_book)){
             sql = "SELECT * FROM BOOKS WHERE ";
             if (!"".equals(surname_of_author)) {
                 sql += "SURNAMEAUTHOR = '" + surname_of_author + "'";
                 if(!"".equals(name_of_author) || !"".equals(name_of_book) 
-                    || !"".equals(year_of_book) || !"".equals(city_of_print)){
+                    || !"".equals(year_of_book) || !"".equals(city_of_print)
+                        || !"".equals(id_genre_book)){
                     sql += And;
                 }
             }
@@ -98,30 +104,60 @@ public class Show_to_Update extends HttpServlet {
             if (!"".equals(name_of_author)) {
                 sql += "NAMEAUTHOR = '" + name_of_author + "'";
                 if(!"".equals(name_of_book) || !"".equals(year_of_book) 
-                        || !"".equals(city_of_print)){
+                        || !"".equals(city_of_print) || !"".equals(id_genre_book)){
                     sql += And;
                 }
             }
         
             if (!"".equals(name_of_book)) {
                 sql += "NAMEBOOK = '" + name_of_book + "'";
-                if(!"".equals(year_of_book) || !"".equals(city_of_print)){
+                if(!"".equals(year_of_book) || !"".equals(city_of_print)
+                        || !"".equals(id_genre_book)){
                     sql += And;
                 }
             }
         
             if (!"".equals(year_of_book)) {
                 sql += "YEARBOOK = " + year_of_book;
-                if(!"".equals(city_of_print)){
+                if(!"".equals(city_of_print) || !"".equals(id_genre_book)){
                     sql += And;
                 }
             }
         
             if (!"".equals(city_of_print)) {
                 sql += "CITYOFPRINT = '" + city_of_print + "'";
+                if(!"".equals(id_genre_book)){
+                    sql += And;
+                }
+            }
+            
+            if(!"".equals(id_genre_book)){
+                sql += "IDGENRE = " + id_genre_book;
             }
         }
-
+        
+        List<Genre> genres = new LinkedList<>();
+        
+        ResultSet resultSetgenre = statement.executeQuery("SELECT * FROM GENRES");
+        
+        
+        while (resultSetgenre.next()) {
+            int id_genre = resultSetgenre.getInt("ID");
+            String name_genre = resultSetgenre.getString("NAMEGENRE");
+            String type_genre = resultSetgenre.getString("TYPEGENRE");
+            int year_genre = resultSetgenre.getInt("YEARGENRE");
+            
+            Genre genre = new Genre();
+            genre.setId(id_genre);
+            genre.setNamegenre(name_genre);
+            genre.setTypegenre(type_genre);
+            genre.setYeargenre(year_genre);
+            
+            genres.add(genre);
+        }
+        
+        resultSetgenre.close();
+        
         ResultSet resultSet = statement.executeQuery(sql);
 
         System.out.println("Retrieving data from database...");
@@ -136,6 +172,8 @@ public class Show_to_Update extends HttpServlet {
             String namebook = resultSet.getString("NAMEBOOK");
             int yearbook = resultSet.getInt("YEARBOOK");
             String cityofprint = resultSet.getString("CITYOFPRINT");
+            int id_genre = resultSet.getInt("IDGENRE");
+            Genre genre = null;
             
             Book book = new Book();
             book.setId(id);
@@ -145,6 +183,14 @@ public class Show_to_Update extends HttpServlet {
             book.setYear_of_book(yearbook);
             book.setCity_of_print(cityofprint);
             
+            for (Genre item: (List<Genre>) genres) {
+                if (item.getId() == id_genre) {
+                    genre = item;
+                    break;
+                }
+            }
+            
+            book.setGenre(genre);
             books.add(book);
             
             System.out.println("\n================\n");
@@ -154,6 +200,8 @@ public class Show_to_Update extends HttpServlet {
             System.out.println("namebook: " + namebook);
             System.out.println("yearbook: " + yearbook);
             System.out.println("cityofprint: " + cityofprint);
+            if (genre == null) System.out.println("namegenre: null");
+            else System.out.println("namegenre: " + genre.getNamegenre());
         }
 
         System.out.println("Closing connection and releasing resources...");

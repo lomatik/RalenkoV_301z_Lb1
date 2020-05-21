@@ -38,6 +38,14 @@ public class Show_genres_to_insert extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         
+        String next_jsp;
+        
+        if (request.getParameter("next_jsp") == null) {
+            next_jsp= "";
+        }
+        
+        else next_jsp = request.getParameter("next_jsp");
+        
         Class.forName("java.sql.Driver");
 
         Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD); 
@@ -69,7 +77,8 @@ public class Show_genres_to_insert extends HttpServlet {
         statement.close();
         connection.close();
         request.setAttribute("genres", genres);
-        request.getRequestDispatcher("/insert.jsp").forward(request,response);
+        if ("".equals(next_jsp)) request.getRequestDispatcher("/insert.jsp").forward(request,response);
+        else request.getRequestDispatcher("/"+next_jsp+".jsp").forward(request,response);
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
